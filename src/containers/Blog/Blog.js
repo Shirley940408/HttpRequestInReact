@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import Post from '../../components/Post/Post';
 import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
-
-
 class Blog extends Component {
     state = {
         posts: [],
@@ -14,7 +12,7 @@ class Blog extends Component {
     }
 
     componentDidMount () {
-        axios.get('https://jsonplaceholder.typicode.com/postssss').then(response => {
+        axios.get('/posts').then(response => {
             const posts = response.data.slice(0, 4);//get an new array from the [0] position to [3](4-1) elements
             const updatedPosts = posts.map(post => {
                 return{
@@ -23,16 +21,17 @@ class Blog extends Component {
                 }
             });
 
-            this.setState({ posts: updatedPosts});
+            this.setState({ posts: updatedPosts });
             // console.log(response);
         }).catch(error => {
             // console.log(error);
-            this.setState({selectedPostId: true});
+            this.setState({ error: true });
         })
         //axios used promises to achieve asychronize
     }
+
     postSelectedHandler = (id) => {
-        this.setState({error: true});
+        this.setState({selectedPostId: id});
     }
 
     render () {
