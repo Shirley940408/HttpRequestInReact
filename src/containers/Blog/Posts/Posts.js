@@ -33,10 +33,11 @@ class Posts extends Component{
 
   postSelectedHandler = (id) => {
       // this.setState({selectedPostId: id});
-      this.props.history.push({pathname: '/' + id})
+      this.props.history.push({pathname: '/posts/' + id})
   }
 
   render () {
+    console.log(this.props.match.url);
     let posts = <p style = {{textAlign: 'center'}}>Something went wrong !</p>
     posts = this.state.posts.map(post => {
        return (
@@ -53,7 +54,7 @@ class Posts extends Component{
         <section className = "Posts">
           {posts}
         </section>
-        <Route path = "/:id" exact component = {FullPost}/>
+        <Route path = {this.props.match.url + '/:id'} exact component = {FullPost}/>
       </div>
     );
   }
